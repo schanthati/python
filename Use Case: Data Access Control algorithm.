@@ -1,0 +1,71 @@
+
+import hashlib
+import uuid
+from datetime import datetime
+
+class User:
+    def __init__(self, username, password, role):
+        self.username = username
+        self.password = self._hash_password(password)
+        self.role = role
+
+    def _hash_password(self, password):
+        return hashlib.sha256(password.encode()).hexdigest()
+
+class DataAccessControlSystem:
+    def __init__(self):
+        self.users = []
+        self.logged_events = []
+
+    def add_user(self, username, password, role):
+        user = User(username, password, role)
+        self.users.append(user)
+        print("User added successfully.")
+
+    def authenticate_user(self, username, password):
+        hashed_password = hashlib.sha256(password.encode()).hexdigest()
+        for user in self.users:
+            if user.username == username and user.password == hashed_password:
+                return user
+        return None
+
+    def access_data(self, user, data):
+        if user.role == "Admin":
+            print("Accessing sensitive data:", data)
+        elif user.role == "Employee":
+            print("Accessing restricted data:", data)
+        else:
+            print("Access denied. Unauthorized role.")
+
+    def log_event(self, user, event):
+        timestamp = datetime.now()
+        self.logged_events.append((timestamp, user.username, event))
+        print("Event logged successfully.")
+
+    def view_logged_events(self):
+        print("Logged Events:")
+        for timestamp, username, event in self.logged_events:
+            print(f"{timestamp} - User: {username}, Event: {event}")
+
+# Main function
+if __name__ == "__main__":
+    dac_system = DataAccessControlSystem()
+
+    # Add users
+    dac_system.add_user("admin", "admin123", "Admin")
+    dac_system.add_user("employee", "emp456", "Employee")
+
+    # Authenticate users
+    authenticated_user = dac_system.authenticate_user("admin", "admin123")
+    if authenticated_user:
+        print("User authenticated successfully.")
+        # Access data
+        dac_system.access_data(authenticated_user, "Top secret document")
+        # Log event
+        dac_system.log_event(authenticated_user, "Accessed sensitive data")
+    else:
+        print("Authentication failed.")
+
+    # View logged events
+    dac_system.view_logged_events()
+
