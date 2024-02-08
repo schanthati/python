@@ -1,0 +1,48 @@
+# Example code using python
+# Make sure the libraries are installed properly
+# https://github.com/schanthati/python.git
+import pandas as pd
+import matplotlib.pyplot as plt
+# Load historical stock data from CSV file
+def load_stock_data(filename):
+    df = pd.read_csv(filename)
+    return df
+
+# Calculate daily returns
+def calculate_daily_returns(df):
+    df['Daily_Return'] = df['Close'].pct_change()
+    return df
+
+# Plot daily stock prices
+def plot_stock_prices(df, symbol):
+    plt.figure(figsize=(10, 6))
+    plt.plot(df['Date'], df['Close'], label='Close Price', color='blue')
+    plt.title(f'{symbol} Stock Prices')
+    plt.xlabel('Date')
+    plt.ylabel('Price')
+    plt.xticks(rotation=45)
+    plt.legend()
+    plt.grid(True)
+    plt.show()
+
+# Calculate and print summary statistics
+def print_summary_statistics(df):
+    summary_stats = df['Daily_Return'].describe()
+    print("Summary Statistics:")
+    print(summary_stats)
+
+# Main function
+if __name__ == "__main__":
+    # Load historical stock data
+    filename = "AAPL.csv"  # Example filename, replace with your own CSV file
+    stock_data = load_stock_data(filename)
+
+    # Calculate daily returns
+    stock_data = calculate_daily_returns(stock_data)
+
+    # Plot daily stock prices
+    plot_stock_prices(stock_data, "AAPL")
+
+    # Print summary statistics
+    print_summary_statistics(stock_data)
+ 
