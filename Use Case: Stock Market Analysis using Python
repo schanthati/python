@@ -45,4 +45,5 @@ if __name__ == "__main__":
 
     # Print summary statistics
     print_summary_statistics(stock_data)
- 
+
+# Explanation: The script defines functions to load historical stock data from a CSV file, calculate daily returns, plot stock prices, and print summary statistics. The “load_stock_data” function loads historical stock data from a CSV file into a Pandas DataFrame. The “calculate_daily_returns” function calculates the daily returns based on the closing prices of the stock. The “plot_stock_prices” function plots the daily closing prices of the stock over time using Matplotlib. The “print_summary_statistics” function calculates and prints summary statistics, such as mean, standard deviation, minimum, maximum, and quartiles, of the daily returns. In the main function, historical stock data is loaded, daily returns are calculated, stock prices are plotted, and summary statistics are printed for analysis. This code provides a basic framework for analyzing historical stock data and gaining insights into stock performance using Python. Additional functionalities, such as technical indicators, risk metrics, and portfolio analysis, can be added based on specific analytical requirements and investment strategies. 
