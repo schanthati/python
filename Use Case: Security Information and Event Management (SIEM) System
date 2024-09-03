@@ -1,0 +1,40 @@
+#  Example code using python
+#  Make sure the libraries are installed properly
+#  https://github.com/schanthati/python
+
+import datetime
+class SIEMSystem:
+    def __init__(self):
+        self.event_logs = []
+    def log_event(self, event_type, source_ip, destination_ip, timestamp=None):
+        if timestamp is None:
+            timestamp = datetime.datetime.now()
+        self.event_logs.append({
+            'event_type': event_type,
+            'source_ip': source_ip,
+            'destination_ip': destination_ip,
+            'timestamp': timestamp
+        })
+        print("Event logged successfully.")
+    def analyze_events(self):
+        for event in self.event_logs:
+            if event['event_type'] == 'Unauthorized Access':
+                self.alert_security_team(event)
+
+    def alert_security_team(self, event):
+        print("ALERT: Unauthorized Access Detected!")
+        print("Event Type:", event['event_type'])
+        print("Source IP:", event['source_ip'])
+        print("Destination IP:", event['destination_ip'])
+        print("Timestamp:", event['timestamp'])
+ 
+# Main function
+if __name__ == "__main__":
+    siem_system = SIEMSystem()
+    # Simulate security events
+    siem_system.log_event("Unauthorized Access", "192.168.1.100", "10.0.0.1")
+    siem_system.log_event("Malware Detected", "10.1.1.1", "10.0.0.2")
+    siem_system.log_event("Denial of Service Attack", "8.8.8.8", "10.0.0.3")
+    # Analyze events and trigger alerts
+    siem_system.analyze_events()
+
